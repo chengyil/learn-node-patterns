@@ -7,6 +7,8 @@ module.exports = function ticker(duration, callback) {
     clearInterval(interval);
     callback();
   }, duration);
+  nextTick(tick);
+  const interval = setInterval(tick, 50);
   function tick() {
     const isDivisableBy5 = Date.now() % 5 === 0;
     if (isDivisableBy5) {
@@ -18,7 +20,5 @@ module.exports = function ticker(duration, callback) {
       emitter.emit('tick');
     }
   }
-  nextTick(() => tick());
-  const interval = setInterval(() => tick(), 50);
   return emitter;
 };
